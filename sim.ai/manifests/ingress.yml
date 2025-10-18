@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: sim-ai
+            name: simstudio
             port:
               number: 80
