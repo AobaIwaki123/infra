@@ -13,8 +13,6 @@ spec:
       labels:
         app: n8n
     spec:
-      imagePullSecrets:
-      - name: gcr-pull-secret
       containers:
       - name: n8n
         image: n8nio/n8n:latest
