@@ -32,7 +32,7 @@ metadata:
 spec:
   storageClassName: cephfs
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 20Gi
