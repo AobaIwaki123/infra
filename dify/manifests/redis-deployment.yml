@@ -18,7 +18,11 @@ spec:
         image: redis:6-alpine
         ports:
         - containerPort: 6379
-        command: ["redis-server", "--requirepass", "difyai123456"]
+        command: ["redis-server"]
+        args: ["--requirepass", "$(REDIS_PASSWORD)"]
+        envFrom:
+        - secretRef:
+            name: dify-secret
         volumeMounts:
         - name: redis-data
           mountPath: /data

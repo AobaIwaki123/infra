@@ -19,10 +19,11 @@ spec:
         env:
         - name: MODE
           value: "worker"
-        - name: DB_HOST
-          value: "dify-postgres"
-        - name: REDIS_HOST
-          value: "dify-redis"
+        envFrom:
+        - configMapRef:
+            name: dify-config
+        - secretRef:
+            name: dify-secret
         volumeMounts:
         - name: dify-storage
           mountPath: /app/api/storage

@@ -19,7 +19,8 @@ spec:
         env:
         - name: MODE
           value: "beat"
-        - name: DB_HOST
-          value: "dify-postgres"
-        - name: REDIS_HOST
-          value: "dify-redis"
+        envFrom:
+        - configMapRef:
+            name: dify-config
+        - secretRef:
+            name: dify-secret

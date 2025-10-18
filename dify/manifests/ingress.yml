@@ -19,17 +19,3 @@ spec:
             name: dify-web
             port:
               number: 80
-      - path: /console/api
-        pathType: Prefix
-        backend:
-          service:
-            name: dify-api
-            port:
-              number: 5001
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: dify-api
-            port:
-              number: 5001

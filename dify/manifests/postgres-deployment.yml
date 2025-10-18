@@ -18,13 +18,11 @@ spec:
         image: postgres:15-alpine
         ports:
         - containerPort: 5432
-        env:
-        - name: POSTGRES_USER
-          value: "postgres"
-        - name: POSTGRES_PASSWORD
-          value: "difyai123456"
-        - name: POSTGRES_DB
-          value: "dify"
+        envFrom:
+        - configMapRef:
+            name: dify-config
+        - secretRef:
+            name: dify-secret
         - name: PGDATA
           value: "/var/lib/postgresql/data/pgdata"
         volumeMounts:
