@@ -16,3 +16,13 @@ spec:
             name: simstudio
             port:
               number: 3000
+  - host: realtime-sim-ai.aooba.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: realtime
+            port:
+              number: 3002

@@ -24,15 +24,15 @@ spec:
         - name: DATABASE_URL
           value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@db:5432/$(POSTGRES_DB)"
         - name: BETTER_AUTH_URL
-          value: "http://simstudio:3000"
+          value: "https://sim-ai.aooba.net"
         - name: NEXT_PUBLIC_APP_URL
-          value: "http://simstudio:3000"
+          value: "https://sim-ai.aooba.net"
         - name: OLLAMA_URL
           value: "http://localhost:11434"
         - name: SOCKET_SERVER_URL
-          value: "http://realtime:3002"
+          value: "https://realtime-sim-ai.aooba.net"
         - name: NEXT_PUBLIC_SOCKET_URL
-          value: "http://realtime:3002"
+          value: "https://realtime-sim-ai.aooba.net"
         envFrom:
         - secretRef:
             name: sim-ai-secret
