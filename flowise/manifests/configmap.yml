@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flowise-config
+  namespace: flowise
+data:
+  PORT: "3000"
+  DATABASE_PATH: "/root/.flowise"
+  SECRETKEY_PATH: "/root/.flowise"
+  LOG_PATH: "/root/.flowise/logs"
+  BLOB_STORAGE_PATH: "/root/.flowise/storage"
+  JWT_ISSUER: "ISSUER"
+  JWT_AUDIENCE: "AUDIENCE"
+  JWT_TOKEN_EXPIRY_IN_MINUTES: "360"
+  JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES: "43200"

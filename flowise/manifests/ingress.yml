@@ -1,21 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: n8n-ingress
-  namespace: n8n
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-cloudflare
+  name: flowise-ingress
+  namespace: flowise
 spec:
   ingressClassName: "cloudflare-tunnel"
   rules:
-  - host: n8n.aooba.net
+  - host: flowise.aooba.net
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: n8n
+            name: flowise
             port:
               number: 80

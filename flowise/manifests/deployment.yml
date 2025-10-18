@@ -1,39 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: n8n
-  namespace: n8n
+  name: flowise
+  namespace: flowise
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: n8n
+      app: flowise
   template:
     metadata:
       labels:
-        app: n8n
+        app: flowise
     spec:
       securityContext:
         fsGroup: 1000
         runAsUser: 1000
         runAsGroup: 1000
       containers:
-      - name: n8n
-        image: n8nio/n8n:latest
+      - name: flowise
+        image: flowiseai/flowise:latest
         ports:
-        - containerPort: 5678
-        env:
-        - name: N8N_PORT
-          value: "5678"
-        - name: N8N_PROTOCOL
-          value: "http"
-        - name: NODE_ENV
-          value: "production"
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: flowise-config
+        - secretRef:
+            name: flowise-secret
         volumeMounts:
-        - name: n8n-data
-          mountPath: /home/node/.n8n
-      # TODO: BASIC認証を追加する
+        - name: flowise-data
+          mountPath: /root/.flowise
       volumes:
-      - name: n8n-data
+      - name: flowise-data
         persistentVolumeClaim:
-          claimName: n8n-data # PVCの名前
+          claimName: flowise-data
