@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/USERNAME/REPOSITORY.git' # Replace with your repository URL
+    repoURL: 'https://github.com/AobaIwaki123/infra.git' # Replace with your repository URL
     path: sim.ai/manifests
-    targetRevision: HEAD
+    targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: sim-ai
