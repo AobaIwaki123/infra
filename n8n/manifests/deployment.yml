@@ -17,12 +17,13 @@ spec:
       - name: gcr-pull-secret
       containers:
       - name: n8n
-        image: n8nio/n8n
+        image: n8nio/n8n:latest
         ports:
         - containerPort: 5678
         volumeMounts:
         - name: n8n-data
           mountPath: /home/node/.n8n
+      # TODO: BASIC認証を追加する
       volumes:
       - name: n8n-data
         persistentVolumeClaim:
