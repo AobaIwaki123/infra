@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dify-redis
+  namespace: dify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dify-redis
+  template:
+    metadata:
+      labels:
+        app: dify-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:6-alpine
+        ports:
+        - containerPort: 6379
+        command: ["redis-server", "--requirepass", "difyai123456"]
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      volumes:
+      - name: redis-data
+        persistentVolumeClaim:
+          claimName: dify-redis

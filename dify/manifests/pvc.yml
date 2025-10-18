@@ -1,13 +1,64 @@
-# pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: n8n-data
-  namespace: n8n
+  name: dify-postgres
+  namespace: dify
 spec:
+  storageClassName: cephfs
   accessModes:
-  - ReadWriteOnce # 単一Podからの読み書き
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 64Gi # 必要な容量
-  storageClassName: ceph-rbd # 環境に応じて変更
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dify-redis
+  namespace: dify
+spec:
+  storageClassName: cephfs
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dify-storage
+  namespace: dify
+spec:
+  storageClassName: cephfs
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dify-plugin-daemon
+  namespace: dify
+spec:
+  storageClassName: cephfs
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dify-weaviate
+  namespace: dify
+spec:
+  storageClassName: cephfs
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

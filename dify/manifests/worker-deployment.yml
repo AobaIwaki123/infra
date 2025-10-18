@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dify-worker
+  namespace: dify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dify-worker
+  template:
+    metadata:
+      labels:
+        app: dify-worker
+    spec:
+      containers:
+      - name: worker
+        image: langgenius/dify-api:1.9.1
+        env:
+        - name: MODE
+          value: "worker"
+        - name: DB_HOST
+          value: "dify-postgres"
+        - name: REDIS_HOST
+          value: "dify-redis"
+        volumeMounts:
+        - name: dify-storage
+          mountPath: /app/api/storage
+      volumes:
+      - name: dify-storage
+        persistentVolumeClaim:
+          claimName: dify-storage

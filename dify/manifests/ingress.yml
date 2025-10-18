@@ -1,21 +1,35 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: n8n-ingress
-  namespace: n8n
+  name: dify-ingress
+  namespace: dify
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-cloudflare
 spec:
   ingressClassName: "cloudflare-tunnel"
   rules:
-  - host: n8n.aooba.net
+  - host: dify.aooba.net
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: n8n
+            name: dify-web
             port:
               number: 80
+      - path: /console/api
+        pathType: Prefix
+        backend:
+          service:
+            name: dify-api
+            port:
+              number: 5001
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: dify-api
+            port:
+              number: 5001

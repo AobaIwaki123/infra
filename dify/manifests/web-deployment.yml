@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dify-web
+  namespace: dify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dify-web
+  template:
+    metadata:
+      labels:
+        app: dify-web
+    spec:
+      containers:
+      - name: web
+        image: langgenius/dify-web:1.9.1
+        ports:
+        - containerPort: 3000
+        env:
+        - name: CONSOLE_API_URL
+          value: "/console/api"
+        - name: APP_API_URL
+          value: "/api"

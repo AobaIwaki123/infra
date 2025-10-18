@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dify-api
+  namespace: dify
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dify-api
+  template:
+    metadata:
+      labels:
+        app: dify-api
+    spec:
+      containers:
+      - name: api
+        image: langgenius/dify-api:1.9.1
+        ports:
+        - containerPort: 5001
+        env:
+        - name: MODE
+          value: "api"
+        - name: DB_HOST
+          value: "dify-postgres"
+        - name: REDIS_HOST
+          value: "dify-redis"
+        volumeMounts:
+        - name: dify-storage
+          mountPath: /app/api/storage
+      volumes:
+      - name: dify-storage
+        persistentVolumeClaim:
+          claimName: dify-storage
