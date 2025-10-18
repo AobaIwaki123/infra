@@ -6,6 +6,10 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+      - name: wait-for-postgres
+        image: busybox:1.36
+        command: ['sh', '-c', 'until nc -z -v -w30 db 5432; do echo "Waiting for postgres..."; sleep 2; done;']
       containers:
       - name: migrations
         image: ghcr.io/simstudioai/migrations:latest
