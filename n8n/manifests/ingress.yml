@@ -3,9 +3,6 @@ kind: Ingress
 metadata:
   name: n8n-ingress
   namespace: n8n
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-cloudflare
 spec:
   ingressClassName: "cloudflare-tunnel"
   rules:
