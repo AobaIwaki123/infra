@@ -4,7 +4,7 @@ metadata:
   name: dify-postgres
   namespace: dify
 spec:
-  storageClassName: cephfs
+  storageClassName: ceph-rbd
   accessModes:
     - ReadWriteOnce
   resources:
@@ -17,7 +17,7 @@ metadata:
   name: dify-redis
   namespace: dify
 spec:
-  storageClassName: cephfs
+  storageClassName: ceph-rbd
   accessModes:
     - ReadWriteOnce
   resources:
@@ -30,7 +30,7 @@ metadata:
   name: dify-storage
   namespace: dify
 spec:
-  storageClassName: cephfs
+  storageClassName: ceph-rbd
   accessModes:
     - ReadWriteMany
   resources:
@@ -43,7 +43,7 @@ metadata:
   name: dify-plugin-daemon
   namespace: dify
 spec:
-  storageClassName: cephfs
+  storageClassName: ceph-rbd
   accessModes:
     - ReadWriteOnce
   resources:
@@ -56,7 +56,7 @@ metadata:
   name: dify-weaviate
   namespace: dify
 spec:
-  storageClassName: cephfs
+  storageClassName: ceph-rbd
   accessModes:
     - ReadWriteOnce
   resources:
