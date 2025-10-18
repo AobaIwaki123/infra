@@ -13,7 +13,15 @@ $ kubectl create namespace dify
 $ kubectl apply -f secret.yml -n dify
 ```
 
+## Argo Appの管理
 
+```sh
+$ argocd app create dify --file app.yml
+```
+
+```sh
+$ argocd app delete dify -n argocd
+```
 # 参考
 
 - [Dify Docker](https://github.com/langgenius/dify/tree/main/docker)

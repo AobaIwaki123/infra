@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dify
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/AobaIwaki123/infra.git
+    path: dify/manifests
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dify
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
