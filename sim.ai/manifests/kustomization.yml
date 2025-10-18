@@ -11,3 +11,4 @@ resources:
 - realtime-deployment.yml
 - realtime-service.yml
 - migrations-job.yml
+- ingress.yml
