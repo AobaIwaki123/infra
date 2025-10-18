@@ -29,6 +29,8 @@ spec:
           value: "http"
         - name: NODE_ENV
           value: "production"
+        - name: N8N_TELEMETRY_ENABLED
+          value: "false"
         volumeMounts:
         - name: n8n-data
           mountPath: /home/node/.n8n
