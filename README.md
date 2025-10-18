@@ -4,4 +4,5 @@
 
 ## コンテンツ
 
-- `n8n`
+- `n8n`: https://n8n.aooba.net
+- `Flowise`: https://flowise.aooba.net

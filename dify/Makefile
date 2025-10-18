@@ -1,4 +1,7 @@
-NS ?= dify
+NS = dify
+
+cp:
+	cp secret.example.yml secret.yml
 
 ns:
 	kubectl create ns $(NS)
@@ -7,7 +10,7 @@ secret:
 	kubectl apply -f secret.yml -n $(NS)
 
 up:
-	argocd app create dify --file app.yml
+	argocd app create $(NS) --file app.yml
 
 down:
-	argocd app delete dify -y
+	argocd app delete $(NS) -y
