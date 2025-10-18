@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: 64Gi # 必要な容量
-  storageClassName: standard # 環境に応じて変更
+  storageClassName: ceph-rbd # 環境に応じて変更
