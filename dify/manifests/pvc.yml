@@ -30,7 +30,7 @@ metadata:
   name: dify-storage
   namespace: dify
 spec:
-  storageClassName: ceph-rbd
+  storageClassName: cephfs
   accessModes:
     - ReadWriteMany
   resources:
