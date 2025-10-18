@@ -1,5 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sim-ai
 resources:
-- deployment.yml
-- service.yml
-- ingress.yml
+- namespace.yml
 - pvc.yml
+- postgres-deployment.yml
+- postgres-service.yml
+- simstudio-deployment.yml
+- simstudio-service.yml
+- realtime-deployment.yml
+- realtime-service.yml
+- migrations-job.yml

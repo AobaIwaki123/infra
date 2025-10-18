@@ -1,13 +1,11 @@
-# pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: n8n-data
-  namespace: n8n
+  name: sim-ai-postgres-pvc
+  namespace: sim-ai
 spec:
   accessModes:
-  - ReadWriteOnce # 単一Podからの読み書き
+  - ReadWriteOnce
   resources:
     requests:
-      storage: 64Gi # 必要な容量
-  storageClassName: ceph-rbd # 環境に応じて変更
+      storage: 1Gi

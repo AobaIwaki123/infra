@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtime
+  namespace: sim-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realtime
+  template:
+    metadata:
+      labels:
+        app: realtime
+    spec:
+      containers:
+        - name: realtime
+          image: ghcr.io/simstudioai/realtime:latest
+          ports:
+            - containerPort: 3002
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@db:5432/$(POSTGRES_DB)"
+            - name: NEXT_PUBLIC_APP_URL
+              value: "http://localhost:3000"
+            - name: BETTER_AUTH_URL
+              value: "http://localhost:3000"
+          envFrom:
+            - secretRef:
+                name: sim-ai-secret

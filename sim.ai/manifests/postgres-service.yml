@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: sim-ai
+spec:
+  selector:
+    app: sim-ai-postgres
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432

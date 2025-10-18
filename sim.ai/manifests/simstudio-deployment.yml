@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simstudio
+  namespace: sim-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simstudio
+  template:
+    metadata:
+      labels:
+        app: simstudio
+    spec:
+      containers:
+      - name: simstudio
+        image: ghcr.io/simstudioai/simstudio:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DATABASE_URL
+          value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@db:5432/$(POSTGRES_DB)"
+        - name: BETTER_AUTH_URL
+          value: "http://localhost:3000"
+        - name: NEXT_PUBLIC_APP_URL
+          value: "http://localhost:3000"
+        - name: OLLAMA_URL
+          value: "http://localhost:11434"
+        - name: SOCKET_SERVER_URL
+          value: "http://localhost:3002"
+        - name: NEXT_PUBLIC_SOCKET_URL
+          value: "http://localhost:3002"
+        envFrom:
+        - secretRef:
+            name: sim-ai-secret

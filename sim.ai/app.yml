@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sim-ai
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/USERNAME/REPOSITORY.git' # Replace with your repository URL
+    path: sim.ai/manifests
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: sim-ai
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
