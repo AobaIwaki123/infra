@@ -1,0 +1,13 @@
+# pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: n8n-data
+  namespace: n8n
+spec:
+  accessModes:
+  - ReadWriteOnce # 単一Podからの読み書き
+  resources:
+    requests:
+      storage: 64Gi # 必要な容量
+  storageClassName: ceph-rbd # 環境に応じて変更
