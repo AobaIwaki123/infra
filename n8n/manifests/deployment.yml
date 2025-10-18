@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      labels:
+        app: n8n
+    spec:
+      imagePullSecrets:
+      - name: gcr-pull-secret
+      containers:
+      - name: n8n
+        image: gcr.io/my-docker-471807/n8n:v7.3.1
+        ports:
+        - containerPort: 5678
