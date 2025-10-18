@@ -17,6 +17,6 @@ spec:
       - name: gcr-pull-secret
       containers:
       - name: n8n
-        image: gcr.io/my-docker-471807/n8n:v7.3.1
+        image: n8nio/n8n
         ports:
         - containerPort: 5678
