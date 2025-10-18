@@ -10,4 +10,4 @@ up:
 	argocd app create dify --file app.yml
 
 down:
-	argocd app delete dify -n argocd
+	argocd app delete dify -y
