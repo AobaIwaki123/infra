@@ -48,6 +48,10 @@ loki-stack:
         maxLines: 1000
     image:
       tag: 10.3.3
+    persistence:
+      enabled: true
+      size: 5Gi
+      storageClassName: ceph-rbd
 
   prometheus:
     enabled: false
