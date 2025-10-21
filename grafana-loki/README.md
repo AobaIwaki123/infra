@@ -131,85 +131,10 @@ git push origin main
 # 1. Helmでインストールしたものを削除
 helm uninstall loki-stack -n monitoring
 
-# 2. ArgoCD Applicationをデプロイ
-kubectl apply -f apps/monitoring/app.yaml
+# 2. ArgoCDで同期
+argocd app create loki-stack --file app.yml
 
-# 3. ArgoCDで同期
-argocd app sync loki-stack
-
-# または、ArgoCD UIで手動同期
+argocd app delete loki-stack
 ```
 
 ---
-
-## 負荷がない場合の同時並行手順
-
-もし完全に並行したい場合：
-
-### オプションA: 別Namespaceで並行
-
-```bash
-# Helm版: monitoring namespace
-helm install loki-stack grafana/loki-stack -n monitoring
-
-# ArgoCD版: monitoring-argocd namespace（テスト用）
-# app.yamlのnamespaceを変更してデプロイ
-```
-
-動作確認後、Helm版を削除してArgoCD版を本番namespaceへ移行。
-
-### オプションB: Helmを直接ArgoCD管理（推奨）
-
-実はArgoCDは直接Helmリポジトリを参照できます：
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: loki-stack
-  namespace: argocd
-spec:
-  project: default
-  source:
-    repoURL: https://grafana.github.io/helm-charts
-    chart: loki-stack
-    targetRevision: 2.10.2
-    helm:
-      values: |
-        loki:
-          enabled: true
-          persistence:
-            enabled: true
-            size: 10Gi
-        promtail:
-          enabled: true
-        grafana:
-          enabled: true
-          persistence:
-            enabled: true
-            size: 1Gi
-        prometheus:
-          enabled: false
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: monitoring
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-```
-
-この方法なら：
-- Gitリポジトリに `Chart.yaml` 不要
-- `app.yaml` だけで完結
-- 最もシンプル
-
-## おすすめの進め方
-
-1. **今すぐ**: Helmで `helm install` → 動作確認（5分）
-2. **並行作業**: ArgoCD Applicationマニフェスト作成 → Gitにpush（10分）
-3. **切り替え**: 動作確認OKなら `helm uninstall` → ArgoCD sync（2分）
-
-どの方法で進めますか？オプションBの「直接Helmリポジトリ参照」が一番楽だと思います。
