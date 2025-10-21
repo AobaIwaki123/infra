@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eck-ingress
+  namespace: default
+  annotations:
+    cloudflare-tunnel-ingress-controller.strrl.dev/backend-protocol: "https"
+    cloudflare-tunnel-ingress-controller.strrl.dev/tls-verify: "false"
+spec:
+  ingressClassName: "cloudflare-tunnel"
+  rules:
+  - host: eck.aooba.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: quickstart-es-http
+            port:
+              number: 9200
