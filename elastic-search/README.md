@@ -39,3 +39,7 @@ $ kubectl apply -f manifests/ingress.yml
 $ PASSWORD=$(kubectl get secret quickstart-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 $ curl -u "elastic:$PASSWORD" -k "https://eck.aooba.net"
 ```
+
+## Deploy a Kibana instance
+
+- [Deploy a Kibana instance](https://www.elastic.co/docs/deploy-manage/deploy/cloud-on-k8s/kibana-instance-quickstart)
