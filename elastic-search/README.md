@@ -16,7 +16,7 @@ $ kubectl patch storageclass ceph-rbd -p '{"metadata": {"annotations":{"storagec
 ```
 
 ```sh
-$ cat <<EOF | kubectl delete -f -
+$ cat <<EOF | kubectl apply -f -
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
