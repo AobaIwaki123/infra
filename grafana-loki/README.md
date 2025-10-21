@@ -37,7 +37,7 @@ kubectl port-forward --namespace monitoring service/loki-stack-grafana 3000:80
 
 ```bash
 # デフォルトのvaluesを取得
-helm show values grafana/loki-stack > loki-stack-values.yaml
+helm show values grafana/loki-stack > manifests/loki-stack-values.yaml
 ```
 
 最小限のカスタマイズ例（`loki-stack-values.yaml`）:
@@ -67,13 +67,12 @@ prometheus:
 #### 2. Gitリポジトリ構造を作成
 
 ```
-your-gitops-repo/
-├── apps/
-│   └── monitoring/
-│       ├── loki-stack/
-│       │   ├── Chart.yaml
-│       │   └── values.yaml
-│       └── application.yaml
+infra/
+├── grafana-loki/
+│   ├── helm/
+│   │   ├── Chart.yaml
+│   │   └── values.yaml
+│   └── app.yaml
 ```
 
 **Chart.yaml**:
@@ -88,29 +87,8 @@ dependencies:
 ```
 
 **values.yaml** (上記でカスタマイズしたもの):
-```yaml
-loki-stack:
-  loki:
-    enabled: true
-    persistence:
-      enabled: true
-      size: 10Gi
-  
-  promtail:
-    enabled: true
-  
-  grafana:
-    enabled: true
-    persistence:
-      enabled: true
-      size: 1Gi
-    adminPassword: "your-secure-password"
-    
-  prometheus:
-    enabled: false
-```
 
-**application.yaml** (ArgoCD Application):
+**app.yaml** (ArgoCD Application):
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -122,7 +100,7 @@ spec:
   source:
     repoURL: https://github.com/your-username/your-gitops-repo.git
     targetRevision: main
-    path: apps/monitoring/loki-stack
+    path: grafana-loki/helm
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -131,17 +109,9 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
+
 ```
-
-#### 3. Helm依存関係を更新
-
-```bash
-cd apps/monitoring/loki-stack
-helm dependency update
-```
-
-これで `charts/` ディレクトリにloki-stackがダウンロードされます。
 
 #### 4. GitにPush
 
@@ -162,7 +132,7 @@ git push origin main
 helm uninstall loki-stack -n monitoring
 
 # 2. ArgoCD Applicationをデプロイ
-kubectl apply -f apps/monitoring/application.yaml
+kubectl apply -f apps/monitoring/app.yaml
 
 # 3. ArgoCDで同期
 argocd app sync loki-stack
@@ -183,7 +153,7 @@ argocd app sync loki-stack
 helm install loki-stack grafana/loki-stack -n monitoring
 
 # ArgoCD版: monitoring-argocd namespace（テスト用）
-# application.yamlのnamespaceを変更してデプロイ
+# app.yamlのnamespaceを変更してデプロイ
 ```
 
 動作確認後、Helm版を削除してArgoCD版を本番namespaceへ移行。
@@ -233,7 +203,7 @@ spec:
 
 この方法なら：
 - Gitリポジトリに `Chart.yaml` 不要
-- `application.yaml` だけで完結
+- `app.yaml` だけで完結
 - 最もシンプル
 
 ## おすすめの進め方
